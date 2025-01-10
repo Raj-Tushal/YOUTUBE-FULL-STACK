@@ -7,6 +7,10 @@ const userSchema = mongoose.Schema(
       required: true,
       unique: true,
     },
+    channel:{
+      type: String,
+      unique: true,
+    },
     email: {
       type: String,
       required: true,
@@ -14,16 +18,20 @@ const userSchema = mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
     },
     img: {
       type: String,
     },
     subscribers: {
       type: Number,
+      default:0
     },
     subscribedChannels: {
       type: [String],
+    },
+    fromGoogle: {
+      type: Boolean,
+      default: false
     },
   },
   { timestamps: true }

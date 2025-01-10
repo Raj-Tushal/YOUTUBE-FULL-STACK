@@ -14,6 +14,12 @@ const commentSchema = mongoose.Schema(
         type: String,
         required: true,
       },
+    userName:{
+        type: String,
+      },
+    img:{
+        type: String,
+      }
   },
  {timestamps: true}
 );

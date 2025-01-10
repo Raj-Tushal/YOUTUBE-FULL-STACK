@@ -11,11 +11,7 @@ function VideoHome() {
   const { state } = useContext(myContext);
 
   return (
-    <div
-      className={`w-screen h-[calc(100vh-70px)] ${
-        state.theme === 'dark' ? 'bg-[#0f0f0f]' : 'bg-[#ffffff]'
-      } flex overflow-y-auto relative z-[1]`}
-    >
+    <div className={`w-screen h-[calc(100vh-70px)] ${state.theme === 'dark' ? 'bg-[#0f0f0f]' : 'bg-[#ffffff]'} flex overflow-y-auto relative z-[1]`}>
       {/* Left */}
       <Left />
 

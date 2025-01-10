@@ -6,28 +6,52 @@ const videoSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    uploadedBy: {
+      type: String,
+    },
+    channelPhoto: {
+type: String,
+    },
     title: {
+      type: String,
+      required: true,
+    },
+    thumbnail: {
+      publicId: {
         type: String,
-        required: true,
       },
-    videoUrl:{
+      url: {
         type: String,
-        required: true,
       },
-      tags:{
-       type: [String],
-       default:[]
-      },
+    },
+    videoUrl: {
+      type: String,
+    },
+    desc: {
+      type: String,
+      required: true,
+    },
+    tags: {
+      type: [String],
+      default: [],
+    },
+    views: {
+      type: Number,
+      default: 0,
+    },
     likes: {
       type: [String],
-      default:0
+      default: 0,
     },
     dislikes: {
-        type: [String],
-        default:0
-      }, 
+      type: [String],
+      default: 0,
+    },
   },
- {timestamps: true}
+  { timestamps: true }
 );
 
-export default mongoose.model("Videos",videoSchema)
+
+
+
+export default mongoose.model("Videos", videoSchema);
