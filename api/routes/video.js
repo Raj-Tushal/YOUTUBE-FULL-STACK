@@ -7,9 +7,9 @@ import upload from '../services/upload.js';
 
 const router = express.Router()
 // create a video
-router.post('/:userId', upload.fields([{ name: 'thumbnail' }, { name: 'video' }]), addVideo);
+router.post('/', upload.fields([{ name: 'thumbnail' }, { name: 'video' }]),verifyToken, addVideo)
 router.put('/:id',verifyToken,updateVideo)
-router.delete('/:id',verifyToken,deleteVideo)
+router.delete('/',verifyToken,deleteVideo)
 router.get('/find/:id',getVideo)
 router.put('/view/:videoId',addView)
 router.get('/random',random)

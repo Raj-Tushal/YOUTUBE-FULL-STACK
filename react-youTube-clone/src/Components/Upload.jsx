@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import myContext from "../Store/context";
+import API from "../utils/api";
 
 function Upload({ setOpen }) {
   const { authState } = useContext(myContext);
@@ -13,27 +14,30 @@ function Upload({ setOpen }) {
 
   const handleVideoChange = (e) => setVideoFile(e.target.files[0]);
   const handleImageChange = (e) => setImageFile(e.target.files[0]);
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       // Prepare form data
       const formData = new FormData();
       formData.append("title", title);
       formData.append("desc", description);
-  
+
       // Split and append tags (choose method based on backend handling)
-      tags.split(",").map((tag) => tag.trim()).forEach((tag) => {
-        formData.append("tags[]", tag); // Use this if backend expects an array
-      });
-  
+      tags
+        .split(",")
+        .map((tag) => tag.trim())
+        .forEach((tag) => {
+          formData.append("tags[]", tag); // Use this if backend expects an array
+        });
+
       formData.append("thumbnail", imageFile);
       formData.append("video", videoFile);
-  
+
       // Send form-data request
-      const response = await axios.post(
-        `http://localhost:8000/api/video/${authState.currentUser._id}`,
+      const response = await API.post(
+        `http://localhost:8000/api/video/`,
         formData,
         {
           headers: {
@@ -41,7 +45,7 @@ function Upload({ setOpen }) {
           },
         }
       );
-  
+
       console.log(response.data, "--> Video data uploaded");
       alert("Data uploaded successfully!");
     } catch (error) {
@@ -49,7 +53,6 @@ function Upload({ setOpen }) {
       alert("Failed to upload. Please try again.");
     }
   };
-  
 
   return (
     <div className="absolute top-0 right-0 h-full w-full bg-[#000000e1] flex items-center justify-center">

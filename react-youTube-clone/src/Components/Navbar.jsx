@@ -67,6 +67,7 @@ function Navbar() {
     .then(() => {
       // console.log("signed out");
       alert("Signed out successfully")
+      localStorage.clear();
       authDispatch({type:"logout"})
     })
     .catch((error) => {

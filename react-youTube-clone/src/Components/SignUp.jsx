@@ -3,6 +3,7 @@ import classNames from "classnames";
 import myContext from "../Store/context";
 import axios from "axios";
 import { auth, signInWithGooglePopup } from "../utils";
+import API from "../utils/api";
 
 const SignIn = () => {
 
@@ -17,7 +18,8 @@ console.log(authState.currentUser,"--current user from sign in");
     e.preventDefault(); // Fixed the typo
     authDispatch({type:"loginStart"})
     try {
-      const res = await axios.post("http://localhost:8000/api/auth/sigIn", { email, password }); // Added protocol and fixed URL
+      const res = await API.post("/auth/sigIn", { email, password }); // Added protocol and fixed URL
+      localStorage.setItem("token", res.data.token);
       console.log(res.data,"user from sign in"); // Log response data
       authDispatch({type:"loginSuccess",payload:res.data})
     } catch (error) {
@@ -49,6 +51,7 @@ useEffect(()=>{
     }
     ).then((res)=>{
           console.log(res.data,"user from google singin")
+          localStorage.setItem("token", res.data.token);
       authDispatch({type:"loginSuccess",payload:res.data.user})
     }).catch((err)=>{
       authDispatch({type:"loginFailure"})

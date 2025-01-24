@@ -7,7 +7,8 @@ import handleUpload from "../services/cloudinaryConfig.js";
 export const addVideo = async (req, res, next) => {
   try {
     // Find the video owner by userId
-    const videoOwner = await Users.findById(req.params.userId);
+    console.log(req.user.id)
+    const videoOwner = await Users.findById(req.user.id);
     if (!videoOwner) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -35,7 +36,7 @@ export const addVideo = async (req, res, next) => {
 
     // Create a new video entry
     const newVideo = new videos({
-      userId: req.params.userId,
+      userId: req.user.id,
       uploadedBy: videoOwner.name,
       channelPhoto: videoOwner.img,
       thumbnail,
@@ -80,10 +81,10 @@ export const deleteVideo = async (req, res, next) => {
   if (!Video) return next(createError(404, "video not found"));
 
   if (req.user.id === Video.userId) {
-    const updatedVideo = await Video.findByIdAndDelete(req.params.id);
+    const deleteVideo = await Video.findByIdAndDelete(req.params.id);
     res.send({
       message: "video deleted successfully",
-      updatedVideo,
+        deleteVideo,
     });
   } else {
     next(createError(403, "you can delete only your video"));
