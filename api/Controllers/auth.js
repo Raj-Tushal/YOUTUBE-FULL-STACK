@@ -43,22 +43,26 @@ export const signIn = async (req, res, next) => {
 
     // generating token
     const token = jwt.sign({ id: dbUser._id }, process.env.JWT);
-
+if (!token) return next(createError(400, "cannot get  token"));
     //  not to display password to user
     let { password, ...otherDetails } = dbUser._doc;
 
-    // res
-    //   .cookie("access_token", token, {
-    //     httpOnly: true,
-    //   })
-    //   .send(
-    //     otherDetails,
-    //   );
+   const cookieOptions = {
+      maxAge: 15 * 24 * 60 * 60 * 1000,
+      sameSite: "none" ,
+      httpOnly: true,
+      secure: true,
+    };
+    return res
+      .status(201)
+      .cookie("token", token, cookieOptions)
 
-    res.send({
-      ...otherDetails,
+      .json({
+          ...otherDetails,
       token,
-    })
+      })
+
+
   } catch (err) {
     next(err);
   }
